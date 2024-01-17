@@ -55,7 +55,7 @@
     </div>
     <canvas id="myCanvas"></canvas>
     <script type="module">
-        import { Viewer, WebIFCLoaderPlugin, Measurement } from "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
+        import { Viewer, WebIFCLoaderPlugin, MeasurementTool } from "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
 
         const viewer = new Viewer({
             canvasId: "myCanvas",
@@ -67,7 +67,7 @@
         viewer.camera.up = [-0.018, 0.999, 0.039];
 
         let currentModel = null;
-        let measurement = null;
+        let measurementTool = null;
 
         const webIFCLoader = new WebIFCLoaderPlugin(viewer, {
             wasmPath: "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/"
@@ -99,20 +99,21 @@
                 edges: true
             });
 
-            // Destroy the current measurement if it exists
-            if (measurement) {
-                measurement.destroy();
+            // Destroy the current measurement tool if it exists
+            if (measurementTool) {
+                measurementTool.destroy();
+                measurementTool = null;
             }
         }
 
         function toggleMeasureTool() {
-            if (measurement) {
+            if (measurementTool) {
                 // If the measurement tool is active, deactivate it
-                measurement.destroy();
-                measurement = null;
+                measurementTool.destroy();
+                measurementTool = null;
             } else {
                 // If the measurement tool is not active, activate it
-                measurement = new Measurement({
+                measurementTool = new MeasurementTool({
                     viewer: viewer
                 });
             }
