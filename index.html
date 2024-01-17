@@ -70,6 +70,19 @@
                 edges: true
             });
         }
+
+        // Make event listeners passive to address warnings
+        window.addEventListener('touchstart', (event) => {
+            if (event.cancelable) {
+                event.preventDefault();
+            }
+        }, { passive: true });
+
+        window.addEventListener('touchmove', (event) => {
+            if (event.cancelable) {
+                event.preventDefault();
+            }
+        }, { passive: true });
     </script>
 </body>
 </html>
