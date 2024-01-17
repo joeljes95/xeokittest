@@ -49,6 +49,10 @@
         viewer.camera.look = [4.400, 3.724, 8.899];
         viewer.camera.up = [-0.018, 0.999, 0.039];
 
+        const webIFCLoader = new WebIFCLoaderPlugin(viewer, {
+            wasmPath: "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/"
+        });
+
         document.getElementById("selectModelButton").addEventListener("click", showModelList);
         document.getElementById("loadModelButton").addEventListener("click", loadSelectedModel);
 
@@ -62,11 +66,6 @@
             modelListDiv.style.display = "none";
 
             var selectedModel = document.querySelector('input[name="model"]:checked').value;
-
-            // Explicitly create a new WebIFCLoaderPlugin for each model load
-            const webIFCLoader = new WebIFCLoaderPlugin(viewer, {
-                wasmPath: "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/"
-            });
 
             const model = webIFCLoader.load({
                 src: selectedModel,
