@@ -50,12 +50,11 @@
             <label><input type="radio" name="model" value="model1.ifc"> Model 1</label><br>
             <label><input type="radio" name="model" value="model2.ifc"> Model 2</label><br>
             <button id="loadModelButton">Load Model</button>
-            <button id="measureButton">Measure Distance</button>
         </div>
     </div>
     <canvas id="myCanvas"></canvas>
     <script type="module">
-        import { Viewer, WebIFCLoaderPlugin, MeasurementPlugin } from "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
+        import { Viewer, WebIFCLoaderPlugin } from "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
 
         const viewer = new Viewer({
             canvasId: "myCanvas",
@@ -72,11 +71,8 @@
             wasmPath: "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/"
         });
 
-        const measurement = new MeasurementPlugin(viewer);
-
         document.getElementById("selectModelButton").addEventListener("click", showModelList);
         document.getElementById("loadModelButton").addEventListener("click", loadSelectedModel);
-        document.getElementById("measureButton").addEventListener("click", startMeasure);
 
         function showModelList() {
             var modelListDiv = document.getElementById("modelList");
@@ -99,10 +95,6 @@
                 src: selectedModel,
                 edges: true
             });
-        }
-
-        function startMeasure() {
-            measurement.enable();
         }
     </script>
 </body>
