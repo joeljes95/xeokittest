@@ -49,6 +49,8 @@
         viewer.camera.look = [4.400, 3.724, 8.899];
         viewer.camera.up = [-0.018, 0.999, 0.039];
 
+        let currentModel = null;
+
         const webIFCLoader = new WebIFCLoaderPlugin(viewer, {
             wasmPath: "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/"
         });
@@ -67,7 +69,13 @@
 
             var selectedModel = document.querySelector('input[name="model"]:checked').value;
 
-            const model = webIFCLoader.load({
+            // Destroy the current model if it exists
+            if (currentModel) {
+                currentModel.destroy();
+            }
+
+            // Load the selected model
+            currentModel = webIFCLoader.load({
                 src: selectedModel,
                 edges: true
             });
