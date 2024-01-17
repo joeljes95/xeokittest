@@ -50,11 +50,12 @@
             <label><input type="radio" name="model" value="model1.ifc"> Model 1</label><br>
             <label><input type="radio" name="model" value="model2.ifc"> Model 2</label><br>
             <button id="loadModelButton">Load Model</button>
+            <button id="measureButton">Toggle Measure Tool</button>
         </div>
     </div>
     <canvas id="myCanvas"></canvas>
     <script type="module">
-        import { Viewer, WebIFCLoaderPlugin } from "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
+        import { Viewer, WebIFCLoaderPlugin, Measurement } from "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/xeokit-sdk.es.min.js";
 
         const viewer = new Viewer({
             canvasId: "myCanvas",
@@ -66,6 +67,7 @@
         viewer.camera.up = [-0.018, 0.999, 0.039];
 
         let currentModel = null;
+        let measurement = null;
 
         const webIFCLoader = new WebIFCLoaderPlugin(viewer, {
             wasmPath: "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/"
@@ -73,6 +75,7 @@
 
         document.getElementById("selectModelButton").addEventListener("click", showModelList);
         document.getElementById("loadModelButton").addEventListener("click", loadSelectedModel);
+        document.getElementById("measureButton").addEventListener("click", toggleMeasureTool);
 
         function showModelList() {
             var modelListDiv = document.getElementById("modelList");
@@ -95,6 +98,24 @@
                 src: selectedModel,
                 edges: true
             });
+
+            // Destroy the current measurement if it exists
+            if (measurement) {
+                measurement.destroy();
+            }
+        }
+
+        function toggleMeasureTool() {
+            if (measurement) {
+                // If the measurement tool is active, deactivate it
+                measurement.destroy();
+                measurement = null;
+            } else {
+                // If the measurement tool is not active, activate it
+                measurement = new Measurement({
+                    viewer: viewer
+                });
+            }
         }
     </script>
 </body>
