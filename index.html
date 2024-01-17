@@ -29,13 +29,13 @@
 </head>
 <body>
     <div id="modelSelector">
-        <button onclick="showModelList()">Select Model</button>
+        <button id="selectModelButton">Select Model</button>
         <div id="modelList" style="display: none;">
             <label><input type="radio" name="model" value="model1.ifc"> Model 1</label><br>
             <label><input type="radio" name="model" value="model2.ifc"> Model 2</label><br>
             <label><input type="radio" name="model" value="model3.ifc"> Model 3</label><br>
             <label><input type="radio" name="model" value="model4.ifc"> Model 4</label><br>
-            <button onclick="loadSelectedModel()">Load Model</button>
+            <button id="loadModelButton">Load Model</button>
         </div>
     </div>
     <canvas id="myCanvas"></canvas>
@@ -54,6 +54,9 @@
         const webIFCLoader = new WebIFCLoaderPlugin(viewer, {
             wasmPath: "https://cdn.jsdelivr.net/npm/@xeokit/xeokit-sdk/dist/"
         });
+
+        document.getElementById("selectModelButton").addEventListener("click", showModelList);
+        document.getElementById("loadModelButton").addEventListener("click", loadSelectedModel);
 
         function showModelList() {
             var modelListDiv = document.getElementById("modelList");
